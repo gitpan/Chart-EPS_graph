@@ -424,110 +424,61 @@ Version 0.01
 
 =head1 SYNOPSIS
 
-=over 4
+	# Create anew a 600 x 600 points (not pixels!) EPS file
+	my $eps = Chart::EPS_graph->new(600, 600);
 
-=item # Create anew a 600 x 600 points (not pixels!) EPS file
+	# Choose minimum required display info
+	$eps->set(
+		label_top => 'Graph Main Title',
+		label_y1  => 'Y1 Axis Measure (Units)',
+		label_y2  => 'Y2 Axis Measure (Units)',
+		label_x   => 'X Axis Measure (Units)',
+	);
 
-=begin html 
-
-<pre>
-my $eps = Chart::EPS_graph->new(600, 600);
-</pre>
-
-=end html
-
-=item # Choose minimum required display info
-
-=begin html 
-
-<pre>
-$eps->set(
-	label_top => 'Graph Main Title',
-	label_y1  => 'Y1 Axis Measure (Units)',
-	label_y2  => 'Y2 Axis Measure (Units)',
-	label_x   => 'X Axis Measure (Units)',
-);
-</pre>
-
-=end html
-
-=item # Choose 6 of 13 named chans, 4 at left, 2 at right
-
-=begin html 
-
-<pre>
-$eps->set(
-	names => \@all_13_name_strings,
-	data  => \@all_13_data_arefs,
-	y1    => [7, 8, 10, 11],
-	y2    => [9, 12],
-);
-</pre>
-
-=end html
-
-=item # Choose  optional graph features
-
-=begin html 
-
-<pre>
-$eps->set(
-	label_y1_2 => 'Extra Y1 Axis Info',
-	label_y2_2 => 'Extra Y2 Axis Info',
-	label_x_2  => 'Extra X Axis Info',
+	# Choose 6 of 13 named chans, 4 at left, 2 at right
+	$eps->set(
+		names => \@all_13_name_strings,
+		data  => \@all_13_data_arefs,
+		y1    => [7, 8, 10, 11],
+		y2    => [9, 12],
+	);
 
 
-<br/><br/>	# Any common browser color no matter how hideous.
-	bg_color   => 'DarkOliveGreen',
-	fg_color   => 'HotPink',
-	web_colors => ['Crimson', 'Lime', 'Indigo', 'Gold', 'Snow', 'Aqua'],
+	# Choose  optional graph features
+	$eps->set(
+		label_y1_2 => 'Extra Y1 Axis Info',
+		label_y2_2 => 'Extra Y2 Axis Info',
+		label_x_2  => 'Extra X Axis Info',
 
+		# Any common browser color no matter how hideous.
+		bg_color   => 'DarkOliveGreen',
+		fg_color   => 'HotPink',
+		web_colors => ['Crimson', 'Lime', 'Indigo', 'Gold', 'Snow', 'Aqua'],
 
-<br/><br/>	# Any known I<PostScript> font no matter how illegible
-	font_name  => 'ZapfChancery-MediumItalic',
-	font_size  => 18,
+		# Any known I<PostScript> font no matter how illegible
+		font_name  => 'ZapfChancery-MediumItalic',
+		font_size  => 18,
 
+		# See POD about this one. But in brief:
+		# If set to "1" channel innumeration gaps will be closed.
+		# If set to "0" (the default) they will be left as they are.
+		close_gap  => 0,
 
-<br/><br/>	# See POD about this one. But in brief:
-	# If set to "1" channel innumeration gaps will be closed.
-	# If set to "0" (the default) they will be left as they are.
-	close_gap  => 0,
+		# If the 0th channel is not for the X axis (the default) then the
+		# data point count is used as the X axis, which you may scale.
+		# So if X were Time in seconds, with no 0th channel having acutally
+		# recorded it, but each data point were known to be 0.5 seconds...
+		$self->{x_is_zeroth} = 0;   # Boolean, so '1' or '0'.
+		$self->{x_scale}     = 2;   # Have 10th datapoint show as 20, etc.
+	);
 
+	# Write output as EPS
+	$eps->write_eps( cwd() . '/whatever.eps' ); # Write to a file.
 
-<br/><br/>	# If the 0th channel is not for the X axis (the default) then the
-	# data point count is used as the X axis, which you may scale.
-	# So if X were Time in seconds, with no 0th channel having acutally
-	# recorded it, but each data point were known to be 0.5 seconds...
-	$self->{x_is_zeroth} = 0;   # Boolean, so '1' or '0'.
-	$self->{x_scale}     = 2;   # Have 10th datapoint show as 20, etc.
-);
-</pre>
-
-=end html
-
-=item # Write output as EPS
-
-=begin html 
-
-<pre>
-$eps->write_eps( cwd() . '/whatever.eps' ); # Write to a file.
-</pre>
-
-=end html
-
-=item # View, convert or edit the EPS output
-
-=begin html 
-
-<pre>
-$eps->display();       # Display in viewer (autodetects 'gv' or 'gsview.exe').
-$eps->display('GS');   # Convert to PNG via Ghostscript.
-$eps->display('GIMP'); # Open for editng in The GIMP.
-</pre>
-
-=end html
-
-=back
+	# View, convert or edit the EPS output
+	$eps->display();       # Display in viewer (autodetects 'gv' or 'gsview.exe').
+	$eps->display('GS');   # Convert to PNG via Ghostscript.
+	$eps->display('GIMP'); # Open for editng in The GIMP.
 
 =head1 DESCRIPTION
 
@@ -609,34 +560,23 @@ A separate test module exists to fully test this one. See POD at head of that
 module for full details. But in short, you may call the full test on a single
 line, or broken over two, as below...
 
-=begin html
+	perl -e "use Chart::EPS_graph::Test; \ 
+	Chart::EPS_graph::Test->full_test('/some/dir');"
 
-<pre>
-perl -e "use Chart::EPS_graph::Test; \ 
-Chart::EPS_graph::Test->full_test('/some/dir');"
-</pre>
-
-=end html
 
 ...and thereby obtain a multi-step report as below...
 
-=begin html
-
-<pre>
-Testing Chart::EPS_graph.pm in path '/some/dir/'
-Okay! File 'foo.eps' has expected first two lines.
-Okay! File 'foo.eps' looks fresh: 0 seconds old.
-Okay! File 'foo.eps' looks big enough, 28319 bytes.
-Okay! Ghostscript created 'foo.eps.png'.
-Okay! File 'foo.eps.png' looks fresh: 1 seconds old.
-Okay! File 'foo.eps.png' looks big enough, 105828 bytes.
-Glad Tidings! All tests okay for Chart::EPS_graph.
-</pre>
-
-=end html
+	Testing Chart::EPS_graph.pm in path '/some/dir/'
+	Okay! File 'foo.eps' has expected first two lines.
+	Okay! File 'foo.eps' looks fresh: 0 seconds old.
+	Okay! File 'foo.eps' looks big enough, 28319 bytes.
+	Okay! Ghostscript created 'foo.eps.png'.
+	Okay! File 'foo.eps.png' looks fresh: 1 seconds old.
+	Okay! File 'foo.eps.png' looks big enough, 105828 bytes.
+	Glad Tidings! All tests okay for Chart::EPS_graph.
 
 Had there been a problem of any kind, one or more of the above lines would have
-begun as I<B<C<Oops!>>> followed by a few terse details. 
+begun as I<Oops!> followed by a few terse details. 
 
 You can also inspect the example files personally via I<The GIMP> or 
 I<ImageMagick> as you choose. I<You can, that is, unless it was the CPAN
@@ -753,6 +693,16 @@ to decrypt said prolog, I next found the fiend to have therin called the
 I<PostScript> 'exitserver' command entirely contrary to warnings forbidding
 such in the official I<PostScript> docs. My Microsoft-ish experiences since
 have only deepened that sentiment further. But I digress...
+
+As an aside, you may further wish to know that the reason folks now publish 
+telephone numbers as 123.555.1212 versus the more traditional 123-555-1212
+may also be blamed on Microsoft as MSWord frustrated users for lack of a
+non-breaking hyphen (which Amiga, Apple, Next and several others all had). 
+So to keep telphone numbers from wrapping on a line, poor sods stuck with 
+MSWord started using periods. I cannot but wonder if MSAccess too, is
+unable to sort telephone numbers without they have periods, or some such
+utter foolishness. Why else would those ugly dots still persist two decades
+later? I'd be very curious to find out, if you happen to know.
 
 From there I went kind of wild with I<PostScript>, using it in all manner of
 ways for which it was probably not intended. This I could in no wise have done
