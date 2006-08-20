@@ -1,5 +1,5 @@
 # $Source: /usr/pkg/lib/perl5/site_perl/5.8.0/Chart/EPS_graph.pm $
-# $Date: 2006-08-15 $
+# $Date: 2006-08-19 $
 
 package Chart::EPS_graph;
 
@@ -428,99 +428,139 @@ Version 0.01
 
 =item # Create anew a 600 x 600 points (not pixels!) EPS file
 
+=begin html 
+
+<pre>
 my $eps = Chart::EPS_graph->new(600, 600);
+</pre>
+
+=end html
 
 =item # Choose minimum required display info
 
+=begin html 
+
+<pre>
 $eps->set(
-    label_top => 'Graph Main Title',
-    label_y1  => 'Y1 Axis Measure (Units)',
-    label_y2  => 'Y2 Axis Measure (Units)',
-    label_x   => 'X Axis Measure (Units)',
+	label_top => 'Graph Main Title',
+	label_y1  => 'Y1 Axis Measure (Units)',
+	label_y2  => 'Y2 Axis Measure (Units)',
+	label_x   => 'X Axis Measure (Units)',
 );
+</pre>
+
+=end html
 
 =item # Choose 6 of 13 named chans, 4 at left, 2 at right
 
-$eps-set(
-    names => \@all_13_name_strings,
-    data  => \@all_13_data_arefs,
-    y1    => [7, 8, 10, 11],
-    y2    => [9, 12],
+=begin html 
+
+<pre>
+$eps->set(
+	names => \@all_13_name_strings,
+	data  => \@all_13_data_arefs,
+	y1    => [7, 8, 10, 11],
+	y2    => [9, 12],
 );
+</pre>
+
+=end html
 
 =item # Choose  optional graph features
 
+=begin html 
+
+<pre>
 $eps->set(
-    label_y1_2 => 'Extra Y1 Axis Info',
-    label_y2_2 => 'Extra Y2 Axis Info',
-    label_x_2  => 'Extra X Axis Info',
+	label_y1_2 => 'Extra Y1 Axis Info',
+	label_y2_2 => 'Extra Y2 Axis Info',
+	label_x_2  => 'Extra X Axis Info',
 
-    # Any common browser color no matter how hideous.
-    bg_color   => 'DarkOliveGreen',
-    fg_color   => 'HotPink',
-    web_colors => ['Crimson', 'Lime', 'Indigo', 'Gold', 'Snow', 'Aqua'],
 
-    # Any known I<PostScript> font no matter how illegible
-    font_name  => 'ZapfChancery-MediumItalic',
-    font_size  => 18,
+<br/><br/>	# Any common browser color no matter how hideous.
+	bg_color   => 'DarkOliveGreen',
+	fg_color   => 'HotPink',
+	web_colors => ['Crimson', 'Lime', 'Indigo', 'Gold', 'Snow', 'Aqua'],
 
-    # See POD about this one. But in brief:
-    # If set to "1" channel innumeration gaps will be closed.
-    # If set to "0" (the default) they will be left as they are.
-    close_gap  => 0,
 
-    # If the 0th channel is not for the X axis (the default) then the
-    # data point count is used as the X axis, which you may scale.
-    # So if X were Time in seconds, with no 0th channel having acutally
-    # recorded it, but each data point were known to be 0.5 seconds...
+<br/><br/>	# Any known I<PostScript> font no matter how illegible
+	font_name  => 'ZapfChancery-MediumItalic',
+	font_size  => 18,
+
+
+<br/><br/>	# See POD about this one. But in brief:
+	# If set to "1" channel innumeration gaps will be closed.
+	# If set to "0" (the default) they will be left as they are.
+	close_gap  => 0,
+
+
+<br/><br/>	# If the 0th channel is not for the X axis (the default) then the
+	# data point count is used as the X axis, which you may scale.
+	# So if X were Time in seconds, with no 0th channel having acutally
+	# recorded it, but each data point were known to be 0.5 seconds...
 	$self->{x_is_zeroth} = 0;   # Boolean, so '1' or '0'.
-	$self->{x_scale}     = 0.5; # Have 10th datapoint show as 20, etc.
+	$self->{x_scale}     = 2;   # Have 10th datapoint show as 20, etc.
 );
+</pre>
+
+=end html
 
 =item # Write output as EPS
 
+=begin html 
+
+<pre>
 $eps->write_eps( cwd() . '/whatever.eps' ); # Write to a file.
+</pre>
+
+=end html
 
 =item # View, convert or edit the EPS output
 
+=begin html 
+
+<pre>
 $eps->display();       # Display in viewer (autodetects 'gv' or 'gsview.exe').
 $eps->display('GS');   # Convert to PNG via Ghostscript.
 $eps->display('GIMP'); # Open for editng in The GIMP.
+</pre>
+
+=end html
 
 =back
 
 =head1 DESCRIPTION
 
-Creates line graphs in I<PostScript> as C<*.eps> format. Coversion to C<*.png>
-or other formats via I<Ghostscript> may be accomplished using either C<gv> on
-Unix or C<GSView.exe> on Win32.
+Creates line graphs in I<PostScript> as C<*.eps> format. 
+
+Viewing accomplished via calls to I<Ghostscript> and/or to C<gv> on unix
+and/or to C<GSView.exe> on Win32.
+
+Coversion to C<*.png> accomplished via system calls to I<Ghostscript> on Unix 
+and/or to C<GSView.exe> on Win32.
 
 =head1 MAIN FEATURES
 
-=over 4
-
-=item Dual Y Axes
+=head2 Dual Y Axes
 
 You may have two Y axes, one each to left and right. The I<PostScript> code
 will auto-reconcile a grid for optimum alignment between both of these Y axes.
 By optimum I mean that scales will be adjusted such that curves traverse the
 entirety of available Y-axis space.
 
-=item 143 Colors
+=head2 143 Colors
 
 You may use as many of the named colors from the W3C table at
 C<http://www.w3schools.com/html/html_colornames.asp> as you like in any order
 that you like.
 
-=item Display, Convert or edit EPS Graph
+=head2 Display, Convert or edit EPS Graph
 
 Asked to display an EPS graph, a 3rd party viewer (C<gv> on UNIX, C<gsview.exe>
 on Win32), coverter I<Ghostscript> or editor I<The GIMP> will be called up to
 display, convert or edit the EPS graph.
 
-=back
-
-=head2 CHANNEL INNUMERATION GAPS
+=head2 Channel Innumeration Gaps
 
 These you may either close or leave open. For example, suppose you have ten
 channels total but only wish to graph five of them. And suppose those channels
@@ -536,7 +576,7 @@ channel than easier upon the eye.
 
 Closing the gap will also reduce file size considerably, as detailed next.
 
-=head3 When you set close_gap => 0
+=head3 When you call C<$foo-E<gt>set{close_gap =E<gt> 0};>
 
 Data arrays for all channels, even those not to be shown, will be embeded into
 the I<PostScript> output file. Traces which are shown will display their true
@@ -550,10 +590,9 @@ over.
 Why do this? The I<PostScript> program was originally written to run stand-
 alone. This feature makes it easy to have one file and, with a minor hand edit,
 generate any number of subsets for all all possible graphs by simply editing
-the /not_shown array. It also allows for the same channel to always display in
-a given number and color no matter if any other channels are not being shown.
+the /not_shown array. 
 
-=head3 When you set close_gap => 1
+=head3 When you call C<$foo-E<gt>set{close_gap =E<gt> 1};>
 
 Data arrays for only those channels assigned to a Y axis will be embeded into
 the I<PostScript> output file. Traces which are shown will display new channel
@@ -562,37 +601,47 @@ new number.
 
 =head1 SUBROUTINES/METHODS
 
+These are pretty much fully covered in the synopsis.
+
 =head1 DIAGNOSTICS
 
 A separate test module exists to fully test this one. See POD at head of that
 module for full details. But in short, you may call the full test on a single
 line, or broken over two, as below...
 
-C<perl -e "use Chart::EPS_graph::Test; \ >
+=begin html
 
-C<print Chart::EPS_graph::Test-E<gt>full_test('/some/dir');"  >
+<pre>
+perl -e "use Chart::EPS_graph::Test; \ 
+Chart::EPS_graph::Test->full_test('/some/dir');"
+</pre>
+
+=end html
 
 ...and thereby obtain a multi-step report as below...
 
-C<Testing Chart::EPS_graph.pm in path '/some/dir/'  >
+=begin html
 
-C<Okay! File 'foo.eps' has expected first two lines.  >
+<pre>
+Testing Chart::EPS_graph.pm in path '/some/dir/'
+Okay! File 'foo.eps' has expected first two lines.
+Okay! File 'foo.eps' looks fresh: 0 seconds old.
+Okay! File 'foo.eps' looks big enough, 28319 bytes.
+Okay! Ghostscript created 'foo.eps.png'.
+Okay! File 'foo.eps.png' looks fresh: 1 seconds old.
+Okay! File 'foo.eps.png' looks big enough, 105828 bytes.
+Glad Tidings! All tests okay for Chart::EPS_graph.
+</pre>
 
-C<Okay! File 'foo.eps' looks fresh: 0 seconds old.  >
-
-C<Okay! File 'foo.eps' looks big enough, 28319 bytes.  >
-
-C<Okay! Ghostscript created 'foo.eps.png'. >
-
-C<Okay! File 'foo.eps.png' looks fresh: 1 seconds old. >
-
-C<Okay! File 'foo.eps.png' looks big enough, 105828 bytes. >
-
-C<Glad Tidings! All tests okay for Chart::EPS_graph. >
+=end html
 
 Had there been a problem of any kind, one or more of the above lines would have
-begun as C<Oops! ...> followed by a few terse details. You can also inspect the
-example files personally via I<The GIMP> or I<ImageMagick> as you choose.
+begun as I<B<C<Oops!>>> followed by a few terse details. 
+
+You can also inspect the example files personally via I<The GIMP> or 
+I<ImageMagick> as you choose. I<You can, that is, unless it was the CPAN
+build proccess which made the call; in which case those files will have
+been deleted immediately after each was measured.>
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -606,41 +655,37 @@ test on these two platforms only:
 
 =item NetBSD 2.0.2 running Perl 5.8.7
 
+Which I am happy to run on my P4 tower and both of my laptops at home.
+
 =item WinXP SP2 running ActiveState Perl 5.8.0.
+
+Which I am saddled with having to suffer the use of at work.
 
 =back
 
 =head1 DEPENDENCIES
 
-Because output is to I<PostScript> (which is not easily made use of in anything
-but print-to-paper output) most users will want to convert the output to some
-other graphics format. For C<*.png> on UNIX platforms a built-in method is
-provided.
+Because output is to I<PostScript> most users will want to convert the output 
+to some other graphics format. Built-in methods for converting to C<*.png> are
+provided. The method of choice, of course, is I<Ghostscript>.
 
-For other formats, such JPEG, you will require an interpreter program. The best
-one is I<GhostScript> but it can often be a hassle to deal with. For this
-reason other 3-rd party viewer programs exist which take all those hassles away.
 
 =head2 Ghostscript
 
 The I<Ghostscript> interpreter for I<PostScript> files is free and available
 for all platforms. This is what will make sense of your C<*.eps> files and
 convert them for viewing on screen. But since it is command-line only (no GUI)
-most folks talk to it only through GUI-enabled viewer programs. So what you do
-is just install Ghostscript and then pretty much forget it is there, letting
-the viewer (described next) interface with I<Ghostscript> for you.
+most folks talk to it only through GUI-enabled viewer programs. This module
+avoids all that, just talking to I<Ghostscript> for you. Nevertheless, you may
+wish to employ a GUI-enabled viewer.
 
 F<http://www.ghostscript.com/>
 
-=head2 PostScript Viewers
+=head2 Other PostScript Viewers
 
-These too are free. Unlike I<Ghostscript>, there are several, depending on your
-particular platform. Being GUI-enabled, they are much more user-friendly than
-is Ghostscript itself. What they do is talk to I<Ghostscript> in the background,
-hiding its complexity and thus making I<Ghostscript> easy to use.
-
-Whatever your platform, one of these viewers will be available from the same
-place as you will have gotten I<Ghostscript> itself.
+These too are free. They generally work by interfacing with I<Ghostscript> on
+your behalf, saving you the hassle of having to deal with I<Ghostscript>'s
+command-line (non-GUI) interface. These are all much more user-friendly.
 
 =over 4
 
@@ -651,29 +696,25 @@ to other formats. Conversion from C<*.eps> to C<*.png> is excellent.
 
 =item FOR UNIX ONLY
 
-The program C<gv> will display C<*.eps> files and also convert them to other
-formats. Display on-screen is excellent. But conversion from C<*.eps> to
-C<*.png>, etc, seems to come out only so-so. Probably the fault is mine in that
-I've not yet sufficiently nuanced its configuration for these conversions to
-match its display. But that is no matter as I<The GIMP> (see next item) performs
-this function very well. Or better yet, built-in conversion to C<*.png> is
-built in for Unix (see Synopsis above).
+The program C<gv> will display C<*.eps> files very well. It will not, however
+convert them to any other formats.
 
 =item FOR ALL
 
 The Gnu Image Management Program (aka I<The GIMP>) is a full-bodied graphic
 image editor which, among its many other features, can also read in C<*.eps>
 files via Ghostscript. And any format it can read it, it can also convert and
-write out. And did I mention...I<The GIMP> is both free and open-source.
+write out. I<The GIMP> is, of course, both free and open-source.
 
 F<http://www.gimp.org/>
 
 When you open an C<*.eps> file in I<The GIMP> it will pop up a menu for how you
-want the C<*.eps> file to be read in. Select the "Try Bounding Box" checkbox.
-Then note the two I<antialiasing> radio buttons. Select "weak" for text and
-"strong" for graphics. This will make bring up an image which looks just like
-the default, on-screen display which C<gv> and C<GSView> (see items above)
-provide.
+want the C<*.eps> file to be read in. Select the I<Try Bounding Box> checkbox.
+Then note the two I<antialiasing> radio buttons. Select I<weak> for text and
+I<strong> for graphics. This will make bring up an image which looks just like
+the default both which C<gv> and C<GSView> provide.
+
+=back
 
 =head1 INCOMPATIBILITIES
 
