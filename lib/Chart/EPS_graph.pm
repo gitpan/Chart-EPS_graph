@@ -684,25 +684,22 @@ platforms besides my own beloved I<Amiga>.
 
 As an aside I cannot refrain from relating that this particular frustration
 also proved to be the font (pun intended) of my initial anger and dismay at
-Microsoft. Since once I had learnt how to solve this dilemma for both the
-I<Amiga> and for the I<Macintosh> I next turned (as a community service) to
-do so for I<MS Word> and I found it imposible. How so? Entirly because
+Microsoft. Since once I had learnt how to solve this problem for both the
+I<Amiga> and for the I<Macintosh> I next turned, as a community service, to
+do so for I<MS Word> and found it imposible. How so? Entirely because
 Mr. Gates had done two things to thwart me: First he'd encrypted MS Word's
 I<PostScript> prolog file for no good reason. And second, once I had managed
-to decrypt said prolog, I next found the fiend to have therin called the
+to decrypt said prolog, I next found the fiend to have therein called the
 I<PostScript> 'exitserver' command entirely contrary to warnings forbidding
 such in the official I<PostScript> docs. My Microsoft-ish experiences since
-have only deepened that sentiment further. But I digress...
+have only deepened that sentiment further.
 
 As an aside, you may further wish to know that the reason folks now publish 
 telephone numbers as 123.555.1212 versus the more traditional 123-555-1212
-may also be blamed on Microsoft as MSWord frustrated users for lack of a
-non-breaking hyphen (which Amiga, Apple, Next and several others all had). 
+may also be blamed on Mr. Gates. MSWord sorely frustrated users for lack of 
+a non-breaking hyphen (which Amiga, Apple, NEXT and several others all had). 
 So to keep telphone numbers from wrapping on a line, poor sods stuck with 
-MSWord started using periods. I cannot but wonder if MSAccess too, is
-unable to sort telephone numbers without they have periods, or some such
-utter foolishness. Why else would those ugly dots still persist two decades
-later? I'd be very curious to find out, if you happen to know.
+MSWord started using periods. But I digress...
 
 From there I went kind of wild with I<PostScript>, using it in all manner of
 ways for which it was probably not intended. This I could in no wise have done
